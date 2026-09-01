@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Barlow Condensed', system-ui, sans-serif;
+  --font-display: 'Bebas Neue', system-ui, sans-serif;
+
+  --dushi-green-950: #0e120d;
+  --dushi-green-900: #141b12;
+  --dushi-green-800: #1b2419;
+  --dushi-green-700: #202a1e;
+  --dushi-yellow-500: #eabb1c;
+  --dushi-yellow-400: #f2c735;
+  --dushi-yellow-600: #c99a12;
+  --dushi-cream-100: #f2efe6;
+  --dushi-salmon-500: #f05a28;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 180px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--dushi-green-900);
+  color: var(--dushi-cream-100);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Textura sutil de papel fibroso (ruido SVG, ~4% de opacidad) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-caramel px-6 py-3
+           font-display text-base uppercase tracking-wider text-night transition-colors
+           hover:bg-ember focus:outline-none focus:ring-2 focus:ring-caramel/60;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-cream/25
+           bg-transparent px-6 py-3 font-display text-base uppercase tracking-wider text-cream
+           transition-colors hover:border-caramel hover:bg-lift hover:text-caramel
+           focus:outline-none focus:ring-2 focus:ring-caramel/40;
+  }
+
+  .eyebrow {
+    @apply font-display text-sm uppercase tracking-[0.3em] text-caramel;
+  }
+
+  .neon-line {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-caramel/50 to-transparent;
+  }
+}
+
+/* Columnas de kanji: flotación lenta, "vivas" */
+@keyframes kanji-float {
+  0%,
+  100% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: 22px;
+  }
+}
+.kanji-col {
+  animation: kanji-float 14s ease-in-out infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .kanji-col {
+    animation: none;
+  }
+}
+
+/* Hide scrollbar on category chip rail */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
